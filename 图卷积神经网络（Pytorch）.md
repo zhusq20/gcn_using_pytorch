@@ -1,5 +1,4 @@
-# README
-图卷积神经网络（Pytorch）
+# 图卷积神经网络（Pytorch）
 
 ## 配置
 

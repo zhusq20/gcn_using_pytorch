@@ -9,7 +9,6 @@ from utils import accuracy
 from models import GCN
 from utils import load_data
 
-# Training settings
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', type=str, default="cora",
                     help='dataset for training')
@@ -29,7 +28,6 @@ parser.add_argument('--dropout', type=float, default=0.5,
 
 args = parser.parse_args()
 
-# os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 criterion = torch.nn.NLLLoss()
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
@@ -90,7 +88,6 @@ def main(dataset, times):
         torch.manual_seed(seed)
         torch.cuda.manual_seed(seed)
 
-        # Model and optimizer
         model = GCN(nfeat=features.shape[1],
                     nhid=args.hidden,
                     nclass=nclass,
@@ -99,13 +96,11 @@ def main(dataset, times):
                                lr=args.lr, weight_decay=args.weight_decay)
         model.to(device)
 
-        # Train model
         t_total = time.time()
         for epoch in range(args.epochs):
             train(epoch, model, optimizer, adj, features, labels, idx_train, idx_val)
         print(f"Total time elapsed: {time.time() - t_total:.4f}s")
 
-        # Testing
         acc_lst.append(test(model, adj, features, labels, idx_test))
 
     print(acc_lst)
